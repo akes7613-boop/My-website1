@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Something Special Is Coming 🎂</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(135deg, #12002f, #24005a, #ff2f92);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---------- ENTER SCREEN ---------- */
+
+    #welcomeScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background:
+        radial-gradient(circle at top, #ff5ca8, transparent 35%),
+        linear-gradient(135deg, #100020, #36006b);
+      padding: 20px;
+    }
+
+    .welcome-box {
+      max-width: 600px;
+      animation: fadeUp 1.2s ease;
+    }
+
+    .welcome-box .emoji {
+      font-size: 70px;
+      animation: bounce 1.5s infinite;
+    }
+
+    .welcome-box h1 {
+      font-size: clamp(2.2rem, 7vw, 4.5rem);
+      margin: 15px 0;
+      text-shadow: 0 0 25px #ff4fa3;
+    }
+
+    .welcome-box p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    #enterBtn {
+      border: none;
+      padding: 16px 35px;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #ff2f92, #ff9f43);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255, 47, 146, 0.7);
+      transition: 0.3s;
+    }
+
+    #enterBtn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 45px rgba(255, 159, 67, 0.9);
+    }
+
+    /* ---------- MAIN ---------- */
+
+    #mainContent {
+      display: none;
+    }
+
+    header {
+      min-height: 90vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .hero {
+      max-width: 900px;
+      z-index: 2;
+    }
+
+    .hero .cake {
+      font-size: 90px;
+      animation: bounce 2s infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 6rem);
+      line-height: 1.05;
+      margin: 20px 0;
+      background: linear-gradient(90deg, #fff, #ffd0e8, #ffc45e);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(255,255,255,0.15);
+    }
+
+    .hero h2 {
+      font-size: clamp(1.3rem, 4vw, 2.2rem);
+      color: #ffd4eb;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.85;
+    }
+
+    /* ---------- COUNTDOWN ---------- */
+
+    .countdown-section {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 35px;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .time-box {
+      width: 130px;
+      height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .time-box span {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ffd166;
+    }
+
+    .time-box small {
+      color: #fff;
+      opacity: 0.8;
+    }
+
+    /* ---------- FRIENDS ---------- */
+
+    .friends {
+      padding: 70px 20px;
+      text-align: center;
+    }
+
+    .friend-container {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .friend-card {
+      position: relative;
+      padding: 35px 25px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(12px);
+      transition: 0.4s;
+      overflow: hidden;
+    }
+
+    .friend-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(255, 47, 146, 0.3);
+    }
+
+    .friend-avatar {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 45px;
+      background: linear-gradient(135deg, #ff2f92, #ffb347);
+      box-shadow: 0 0 30px rgba(255, 47, 146, 0.5);
+    }
+
+    .friend-card h3 {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .friend-card p {
+      line-height: 1.7;
+      color: #f4ddea;
+    }
+
+    /* ---------- MEMORIES ---------- */
+
+    .memories {
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .memory-grid {
+      max-width: 1000px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .memory {
+      height: 220px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffd6eb;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .memory img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ---------- SURPRISE ---------- */
+
+    .surprise {
+      padding: 90px 20px;
+      text-align: center;
+    }
+
+    #surpriseBtn {
+      padding: 18px 40px;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(45deg, #ff2f92, #ff9f43);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(255,47,146,0.6);
+      transition: 0.3s;
+    }
+
+    #surpriseBtn:hover {
+      transform: scale(1.08);
+    }
+
+    #surpriseMessage {
+      display: none;
+      max-width: 800px;
+      margin: 40px auto 0;
+      padding: 35px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      animation: fadeUp 1s ease;
+    }
+
+    #surpriseMessage h2 {
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: #ffd166;
+      margin-bottom: 20px;
+    }
+
+    #surpriseMessage p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      color: #f8cce0;
+    }
+
+    /* ---------- MUSIC BUTTON ---------- */
+
+    #musicBtn {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+      width: 55px;
+      height: 55px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    /* ---------- BALLOONS ---------- */
+
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      width: 45px;
+      height: 55px;
+      border-radius: 50%;
+      opacity: 0.75;
+      animation: floatUp linear infinite;
+      z-index: 0;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 70px;
+      background: rgba(255,255,255,0.5);
+      top: 52px;
+      left: 50%;
+    }
+
+    .b1 { left: 8%; background: #ff4d8d; animation-duration: 10s; }
+    .b2 { left: 25%; background: #ffd166; animation-duration: 13s; animation-delay: 2s; }
+    .b3 { left: 55%; background: #5ee7df; animation-duration: 11s; animation-delay: 4s; }
+    .b4 { left: 80%; background: #9b5de5; animation-duration: 14s; animation-delay: 1s; }
+
+    /* ---------- CONFETTI ---------- */
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 15px;
+      z-index: 9998;
+      animation: confettiFall 3s linear forwards;
+    }
+
+    /* ---------- ANIMATIONS ---------- */
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) rotate(0);
+      }
+      to {
+        transform: translateY(-120vh) rotate(360deg);
+      }
+    }
+
+    @keyframes confettiFall {
+      from {
+        transform: translateY(0) rotate(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-15px);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .time-box {
+        width: 75px;
+        height: 90px;
+      }
+
+      .time-box span {
+        font-size: 1.7rem;
+      }
+
+      .friend-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= ENTER SCREEN ================= -->
+
+  <div id="welcomeScreen">
+    <div class="welcome-box">
+      <div class="emoji">🎁</div>
+
+      <h1>Hey Sahil, Aftab & Akash!</h1>
+
+      <p>
+        Someone has prepared a little surprise for you... 👀
+        <br>
+        Tap below to enter! ❤️
+      </p>
+
+      <button id="enterBtn">
+        🎵 Enter The Surprise 🎂
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ================= MUSIC ================= -->
+
+  <audio id="bgMusic" loop>
+    <source src="birthday-music.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+
+  <button id="musicBtn" title="Toggle Music">
+    🔊
+  </button>
+
+
+  <!-- ================= BALLOONS ================= -->
+
+  <div class="balloon b1"></div>
+  <div class="balloon b2"></div>
+  <div class="balloon b3"></div>
+  <div class="balloon b4"></div>
+
+
+  <!-- ================= MAIN CONTENT ================= -->
+
+  <main id="mainContent">
+
+    <header>
+      <div class="hero">
+
+        <div class="cake">🎂</div>
+
+        <h2>Something Special Is Coming...</h2>
+
+        <h1>
+          Sahil • Aftab • Akash
+        </h1>
+
+        <p>
+          Your birthdays are getting closer! 🥳
+          <br>
+          So here's a little pre-birthday surprise just for you. ❤️
+        </p>
+
+      </div>
+    </header>
+
+
+    <!-- ================= COUNTDOWN ================= -->
+
+    <section class="countdown-section">
+
+      <h2 class="section-title">
+        ⏳ The Countdown Begins
+      </h2>
+
+      <div class="countdown">
+
+        <div class="time-box">
+          <span id="days">00</span>
+          <small>Days</small>
+        </div>
+
+        <div class="time-box">
+          <span id="hours">00</span>
+          <small>Hours</small>
+        </div>
+
+        <div class="time-box">
+          <span id="minutes">00</span>
+          <small>Minutes</small>
+        </div>
+
+        <div class="time-box">
+          <span id="seconds">00</span>
+          <small>Seconds</small>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= FRIENDS ================= -->
+
+    <section class="friends">
+
+      <h2 class="section-title">
+        💖 For The Birthday Legends
+      </h2>
+
+      <div class="friend-container">
+
+        <div class="friend-card">
+
+          <div class="friend-avatar">
+            😎
+          </div>
+
+          <h3>Sahil</h3>
+
+          <p>
+            May your upcoming birthday bring you
+            unlimited happiness, unforgettable memories,
+            and everything you've been wishing for! 🎉
+          </p>
+
+        </div>
+
+
+        <div class="friend-card">
+
+          <div class="friend-avatar">
+            🔥
+          </div>
+
+          <h3>Aftab</h3>
+
+          <p>
+            Get ready for another amazing year!
+            May your life be filled with laughter,
+            success, adventures and amazing people. ❤️
+          </p>
+
+        </div>
+
+
+        <div class="friend-card">
+
+          <div class="friend-avatar">
+            👑
+          </div>
+
+          <h3>Akash</h3>
+
+          <p>
+            Your special day is almost here!
+            Wishing you a year full of happiness,
+            success, crazy moments and great memories. 🥳
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= MEMORIES ================= -->
+
+    <section class="memories">
+
+      <h2 class="section-title">
+        📸 Our Memories
+      </h2>
+
+      <div class="memory-grid">
+
+        <!-- Replace these with your photos -->
+
+        <div class="memory">
+          <img src="photo1.jpg" alt="Memory 1"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='📸 Add Photo 1';">
+        </div>
+
+        <div class="memory">
+          <img src="photo2.jpg" alt="Memory 2"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='📸 Add Photo 2';">
+        </div>
+
+        <div class="memory">
+          <img src="photo3.jpg" alt="Memory 3"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='📸 Add Photo 3';">
+        </div>
+
+        <div class="memory">
+          <img src="photo4.jpg" alt="Memory 4"
+               onerror="this.style.display='none'; this.parentElement.innerHTML='📸 Add Photo 4';">
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= SURPRISE ================= -->
+
+    <section class="surprise">
+
+      <h2 class="section-title">
+        🎁 One Last Thing...
+      </h2>
+
+      <button id="surpriseBtn">
+        ✨ Open Your Surprise ✨
+      </button>
+
+      <div id="surpriseMessage">
+
+        <h2>🎉 HAPPY PRE-BIRTHDAY! 🎉</h2>
+
+        <p>
+          Dear Sahil, Aftab & Akash,
+          <br><br>
+
+          Your birthdays may not be here yet...
+          but why wait until the actual day to celebrate
+          three awesome people? 😎
+          <br><br>
+
+          May the coming year bring you
+          <strong>happiness, success, good health,
+          crazy adventures and countless memories.</strong>
+          ❤️
+          <br><br>
+
+          Keep smiling, keep growing,
+          and most importantly...
+          keep being the amazing people you are! 🥳
+          <br><br>
+
+          <strong>Happy Pre-Birthday, Legends! 🎂🔥</strong>
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      Made with ❤️ for Sahil, Aftab & Akash
+      <br>
+      🎂 The celebration starts early!
+    </footer>
+
+  </main>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /* ---------- MUSIC ---------- */
+
+    const music = document.getElementById("bgMusic");
+    const enterBtn = document.getElementById("enterBtn");
+    const musicBtn = document.getElementById("musicBtn");
+    const welcomeScreen = document.getElementById("welcomeScreen");
+    const mainContent = document.getElementById("mainContent");
+
+    let musicPlaying = false;
+
+    enterBtn.addEventListener("click", () => {
+
+      welcomeScreen.style.display = "none";
+      mainContent.style.display = "block";
+
+      music.volume = 0.5;
+
+      music.play()
+        .then(() => {
+          musicPlaying = true;
+          musicBtn.innerHTML = "🔊";
+        })
+        .catch(() => {
+          musicPlaying = false;
+          musicBtn.innerHTML = "🔇";
+        });
+
+      createConfetti(100);
+    });
+
+
+    musicBtn.addEventListener("click", () => {
+
+      if (musicPlaying) {
+
+        music.pause();
+        musicPlaying = false;
+        musicBtn.innerHTML = "🔇";
+
+      } else {
+
+        music.play()
+          .then(() => {
+            musicPlaying = true;
+            musicBtn.innerHTML = "🔊";
+          });
+
+      }
+
+    });
+
+
+    /* ---------- COUNTDOWN ---------- */
+
+    /*
+      IMPORTANT:
+      Change this date to the birthday date you want.
+
+      Format:
+      YYYY-MM-DDTHH:MM:SS
+
+      Example:
+      2026-09-15T00:00:00
+    */
+
+    const birthdayDate = new Date("2026-09-15T00:00:00").getTime();
+
+
+    function updateCountdown() {
+
+      const now = new Date().getTime();
+
+      const distance = birthdayDate - now;
+
+
+      if (distance <= 0) {
+
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+
+        return;
+      }
+
+
+      const days = Math.floor(
+        distance / (1000 * 60 * 60 * 24)
+      );
+
+      const hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24))
+        / (1000 * 60 * 60)
+      );
+
+      const minutes = Math.floor(
+        (distance % (1000 * 60 * 60))
+        / (1000 * 60)
+      );
+
+      const seconds = Math.floor(
+        (distance % (1000 * 60))
+        / 1000
+      );
+
+
+      document.getElementById("days").innerText =
+        String(days).padStart(2, "0");
+
+      document.getElementById("hours").innerText =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("minutes").innerText =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("seconds").innerText =
+        String(seconds).padStart(2, "0");
+    }
+
+
+    updateCountdown();
+
+    setInterval(updateCountdown, 1000);
+
+
+    /* ---------- SURPRISE ---------- */
+
+    const surpriseBtn = document.getElementById("surpriseBtn");
+    const surpriseMessage = document.getElementById("surpriseMessage");
+
+    surpriseBtn.addEventListener("click", () => {
+
+      surpriseMessage.style.display = "block";
+
+      surpriseBtn.style.display = "none";
+
+      createConfetti(180);
+
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: "smooth"
+      });
+
+    });
+
+
+    /* ---------- CONFETTI ---------- */
+
+    function createConfetti(amount) {
+
+      const colors = [
+        "#ff2f92",
+        "#ffd166",
+        "#06d6a0",
+        "#4cc9f0",
+        "#ffffff",
+        "#9b5de5"
+      ];
+
+
+      for (let i = 0; i < amount; i++) {
+
+        const confetti = document.createElement("div");
+
+        confetti.classList.add("confetti");
+
+        confetti.style.left =
+          Math.random() * 100 + "vw";
+
+        confetti.style.background =
+          colors[Math.floor(Math.random() * colors.length)];
+
+        confetti.style.animationDuration =
+          (Math.random() * 2 + 2) + "s";
+
+        confetti.style.animationDelay =
+          Math.random() * 0.5 + "s";
+
+        confetti.style.transform =
+          `rotate(${Math.random() * 360}deg)`;
+
+        document.body.appendChild(confetti);
+
+
+        setTimeout(() => {
+          confetti.remove();
+        }, 4000);
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
